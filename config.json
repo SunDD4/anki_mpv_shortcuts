@@ -1,0 +1,11 @@
+{
+  "enabled": true,
+  "mpv_path": "/opt/homebrew/bin/mpv",
+  "keep_open": true,
+  "custom_shortcuts": {
+    "LEFT": "no-osd seek -2 exact",
+    "RIGHT": "no-osd seek 2 exact",
+    "UP": "multiply speed 1.1",
+    "DOWN": "multiply speed 0.9"
+  }
+}

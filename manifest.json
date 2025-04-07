@@ -1,0 +1,9 @@
+{
+    "name": "MPV 快捷键插件",
+    "package": "anki_mpv_shortcuts",
+    "author": "SunDD4",
+    "version": "1.0.0",
+    "homepage": "https://github.com/SunDD4/anki_mpv_shortcuts",
+    "conflicts": [],
+    "mod": 0
+}
