@@ -81,15 +81,19 @@ def show_mpv_control_panel():
     current_x = config.get("window_x", 50)
     current_y = config.get("window_y", 50)
     is_enabled = config.get("enabled", True)
-    remember_position = config.get("remember_position", True)
+    # 修改默认值：记住视频播放进度默认为False
+    remember_position = config.get("remember_position", False)
     enable_speed_cycle = config.get("enable_speed_cycle", True)
-    always_on_top = config.get("always_on_top", False)
+    # 修改默认值：视频窗口置顶默认为True
+    always_on_top = config.get("always_on_top", True)
     
-    # 获取x和z快捷键的配置
-    x_duration = config.get("x_duration", 3.0)
-    x_offset = config.get("x_offset", 1.5)
-    z_duration = config.get("z_duration", 2.5)
-    z_offset = config.get("z_offset", 2.7)
+    # 获取x和z快捷键的配置，修改默认值为图中红框所示
+    # X键默认值修改为2.5秒持续时间，0.5秒偏移
+    x_duration = config.get("x_duration", 2.5)
+    x_offset = config.get("x_offset", 0.5)
+    # Z键默认值修改为3.5秒持续时间，3.7秒偏移
+    z_duration = config.get("z_duration", 3.5)
+    z_offset = config.get("z_offset", 3.7)
     
     dialog = QDialog(mw)
     dialog.setWindowTitle("MPV播放器控制面板")
