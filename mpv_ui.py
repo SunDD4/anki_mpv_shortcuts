@@ -115,9 +115,15 @@ def show_mpv_control_panel():
     speed_cycle_checkbox.setChecked(enable_speed_cycle)
     toggle_layout.addWidget(speed_cycle_checkbox)
     
+    # 在"视频窗口置顶"选项下方添加
     always_on_top_checkbox = QCheckBox("视频窗口置顶")
     always_on_top_checkbox.setChecked(always_on_top)
     toggle_layout.addWidget(always_on_top_checkbox)
+    
+    # 添加禁用OSD选项
+    disable_osd_checkbox = QCheckBox("禁用MPV的OSD消息 (适用于IINA等外部播放器)")
+    disable_osd_checkbox.setChecked(config.get("disable_osd", False))
+    toggle_layout.addWidget(disable_osd_checkbox)
     
     toggle_group.setLayout(toggle_layout)
     layout.addWidget(toggle_group)
@@ -349,6 +355,8 @@ def show_mpv_control_panel():
         old_speed_cycle_state = config.get("enable_speed_cycle", True)
         config["enable_speed_cycle"] = speed_cycle_checkbox.isChecked()
         config["always_on_top"] = always_on_top_checkbox.isChecked()
+        # 保存禁用OSD的设置
+        config["disable_osd"] = disable_osd_checkbox.isChecked()
         
         scale = scale_slider.value() / 100
         config["window_scale"] = scale

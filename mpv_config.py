@@ -46,8 +46,13 @@ def create_mpv_config():
     config_content += "w multiply speed 1.1\ns multiply speed 0.85\n"
     config_content += "e set speed 1.0\nc ab-loop\n"
     config_content += "f cycle-values loop \"inf\" \"no\"\n"
-    config_content += f"x script-message-to quick_ab_loop set_custom_ab_loop {x_duration} {x_offset}\n"
-    config_content += f"z script-message-to quick_ab_loop set_custom_ab_loop {z_duration} {z_offset}\n\n"
+    config_content += "x script-message-to quick_ab_loop set_custom_ab_loop 2.5 0.5\n"
+    config_content += "z script-message-to quick_ab_loop set_custom_ab_loop 3.5 3.7\n\n"
+    
+    # 添加r和v按键的配置
+    config_content += "# 倍速循环播放控制\n"
+    config_content += "r script-message-to speed_cycle start_cycling\n"
+    config_content += "v script-message-to speed_cycle start_cycling\n\n"
     
     for key, action in custom_shortcuts.items():
         config_content += f"{key} {action}\n"
@@ -63,6 +68,8 @@ def create_mpv_config():
     window_x = config.get("window_x", 50)
     window_y = config.get("window_y", 50)
     enable_speed_cycle = config.get("enable_speed_cycle", True)
+    # 添加一个新的配置选项，控制是否显示MPV的OSD信息
+    disable_osd = config.get("disable_osd", False)
     
     mpv_conf_content = f"""
 # MPV 配置文件 - 由 Anki MPV 快捷键插件生成
@@ -70,6 +77,30 @@ save-position-on-quit=yes
 watch-later-directory=~/.config/mpv/watch_later
 script-opts=ytdl_hook-ytdl_path=yt-dlp
 geometry={window_x}%:{window_y}%
+"""
+
+    # 如果禁用OSD，添加更全面的OSD禁用配置
+    if disable_osd:
+        mpv_conf_content += """
+# 完全禁用MPV的OSD消息，适用于在IINA等外部播放器中使用
+osd-level=0
+osd-duration=0
+osd-on-seek=no
+osd-bar=no
+# 将OSD字体设置为极小，几乎不可见
+osd-font-size=1
+osd-scale=0.01
+osd-color='#00000000'
+osd-border-color='#00000000'
+osd-shadow-color='#00000000'
+osd-back-color='#00000000'
+osd-msg1=""
+osd-msg2=""
+osd-msg3=""
+osd-status-msg=""
+
+# 禁用脚本中的OSD显示
+script-opts=quick_ab_loop-show_osd=no,speed_cycle-show_osd=no
 """
     
     scripts_dir = os.path.join(config_dir, "scripts")
